@@ -1,0 +1,49 @@
+{
+  "name": "dom-svg-pdf",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "dom-svg-pdf",
+  "author": "xiashui",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiashui1994/dom-svg-pdf"
+  },
+  "keywords": [
+    "dom-svg-pdf",
+    "svg",
+    "pdf",
+    "dom",
+    "print"
+  ],
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/dom-svg-pdf.js",
+    "require": "./dist/dom-svg-pdf.cjs"
+  },
+  "main": "./dist/dom-svg-pdf.cjs",
+  "module": "./dist/dom-svg-pdf.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.22.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "eslint": "^9.6.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}
