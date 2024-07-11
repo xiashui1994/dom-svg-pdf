@@ -24,7 +24,9 @@
   "main": "./dist/dom-svg-pdf.cjs",
   "module": "./dist/dom-svg-pdf.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": "^18.0.0 || >=20.0.0"
   },
@@ -34,6 +36,9 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "pagedjs": "^0.4.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.22.0",
