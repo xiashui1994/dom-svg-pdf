@@ -5,6 +5,9 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "paths": {
+      "*": ["./types/*", "./*"]
+    },
     "resolveJsonModule": true,
     "strict": true,
     "noImplicitReturns": true,
