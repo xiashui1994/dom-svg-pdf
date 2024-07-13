@@ -13,6 +13,19 @@ declare class Chunker {
   hooks: object
   pages: any[]
   total: number
+  size: {
+    width: {
+      value: number
+      unit: string
+    }
+    height: {
+      value: number
+      unit: string
+    }
+    format: any
+    orientation: any
+  }
+
   q: Queue
   stopped: boolean
   rendered: boolean

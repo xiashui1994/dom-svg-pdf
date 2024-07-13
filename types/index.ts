@@ -4,4 +4,5 @@ export declare interface PDFOptions {
   katex?: boolean
   fonts?: TFontDictionary
   fontsPath?: string
+  defaultFont?: string
 }

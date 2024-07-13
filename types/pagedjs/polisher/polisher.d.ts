@@ -1,6 +1,6 @@
 export default Polisher
 declare class Polisher {
-  constructor(setup: any)
+  constructor(setup?: any)
   sheets: any[]
   inserted: any[]
   hooks: any
