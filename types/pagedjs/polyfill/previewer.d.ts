@@ -3,7 +3,7 @@ import type Chunker from '../chunker/chunker.js'
 
 export default Previewer
 declare class Previewer {
-  constructor(options: any)
+  constructor(options?: any)
   settings: any
   polisher: Polisher
   chunker: Chunker
@@ -27,6 +27,6 @@ declare class Previewer {
   getParams(name: any): any
   wrapContent(): any
   removeStyles(doc?: Document): any[]
-  preview(content: any, stylesheets: any, renderTo: any): Promise<Chunker>
+  preview(content?: any, stylesheets?: any, renderTo?: any): Promise<Chunker>
   handlers: import('../utils/handlers.js').Handlers
 }

@@ -45,5 +45,9 @@
     "scss",
     "pcss",
     "postcss"
+  ],
+  "cSpell.words": [
+    "chunker",
+    "pagedjs"
   ]
 }
