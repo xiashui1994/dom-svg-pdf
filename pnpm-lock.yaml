@@ -9,7 +9,7 @@ specifiers:
   eslint: ^9.6.0
   husky: ^9.0.11
   lint-staged: ^15.2.7
-  pagedjs: ^0.4.3
+  pagedjs: 0.5.0-beta.1
   pdfmake: ^0.2.10
   typescript: ^5.5.3
   vite: ^5.3.3
@@ -17,7 +17,7 @@ specifiers:
 
 dependencies:
   dom2svg: 1.0.7
-  pagedjs: 0.4.3
+  pagedjs: 0.5.0-beta.1
   pdfmake: 0.2.10
 
 devDependencies:
@@ -3555,8 +3555,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /pagedjs/0.4.3:
-    resolution: {integrity: sha512-YtAN9JAjsQw1142gxEjEAwXvOF5nYQuDwnQ67RW2HZDkMLI+b4RsBE37lULZa9gAr6kDAOGBOhXI4wGMoY3raw==}
+  /pagedjs/0.5.0-beta.1:
+    resolution: {integrity: sha512-2TxnrVDOTukfSAZjbd7JGeKHvZGkwVa/Dk0BWXg5UXbh8iKsdyWpd8HZBANB4UzzJW+Z77H8Poqax4bJwBqKJQ==}
     dependencies:
       '@babel/polyfill': 7.12.1
       '@babel/runtime': 7.24.7
