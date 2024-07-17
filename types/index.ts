@@ -1,8 +1,10 @@
-import type { TFontDictionary } from 'pdfmake/interfaces'
+import type { TDocumentDefinitions, TFontDictionary } from 'pdfmake/interfaces'
 
 export declare interface PDFOptions {
   katex?: boolean
   fonts?: TFontDictionary
   fontsPath?: string
-  defaultFont?: string
+  bold?: boolean
+  docDefinition?: Partial<TDocumentDefinitions>
+  pagedjsPlugins?: string[]
 }

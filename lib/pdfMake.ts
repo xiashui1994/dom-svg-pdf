@@ -5,7 +5,7 @@ import { getFonts } from './fonts'
 
 export async function createPdf(content: Content, pageOrientation: PageOrientation | undefined, pageSize: PageSize | undefined, options?: PDFOptions) {
   const font: string = 'LXGWNeoXiHei'
-  const { katex = false, fonts = {}, fontsPath = window.location.origin } = options || {}
+  const { docDefinition = {}, katex = false, fonts = {}, fontsPath = window.location.origin } = options || {}
 
   // pdfMake 配置
   const docOptions: TDocumentDefinitions = {
@@ -14,6 +14,7 @@ export async function createPdf(content: Content, pageOrientation: PageOrientati
     pageSize,
     pageMargins: [0, 0, 0, 0],
     pageOrientation,
+    ...docDefinition,
   };
 
   (<any>pdfMake).fonts = { ...getFonts(docOptions.defaultStyle?.font === font, katex, fontsPath), ...fonts }
