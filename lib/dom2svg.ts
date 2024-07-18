@@ -12,7 +12,7 @@ export async function dom2svgString(element: HTMLElement, options?: PDFOptions):
         const fontWeight = Number(text.getAttribute('font-weight')) || 400
         if (fontWeight < 500)
           continue
-        const color = text.getAttribute('color') || 'black'
+        const color = text.getAttribute('fill') || 'black'
         text.setAttribute('stroke', color)
         text.setAttribute('stroke-width', fontWeight > 500 ? '0.5' : '0.25')
       }
