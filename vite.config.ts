@@ -11,8 +11,19 @@ export default defineConfig({
     target: 'es2015',
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
-      name: 'Counter',
-      fileName: 'counter',
+      name: 'domSvgPdf',
+      fileName: 'dom-svg-pdf',
+    },
+    copyPublicDir: false,
+    rollupOptions: {
+      external: ['dom2svg', 'pagedjs', 'pdfmake/build/pdfmake.min'],
+      output: {
+        globals: {
+          'dom2svg': 'dom2svg',
+          'pagedjs': 'pagedjs',
+          'pdfmake/build/pdfmake.min': 'pdfmake',
+        },
+      },
     },
   },
   plugins: [dts({ rollupTypes: true })],

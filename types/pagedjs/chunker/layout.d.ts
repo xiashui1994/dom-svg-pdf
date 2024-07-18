@@ -33,7 +33,7 @@ declare class Layout {
    *
    * @returns {void}
    */
-  addOverflowNodes(dest: element, source: element): void
+  addOverflowNodes(dest: HTMLElement, source: HTMLElement): void
   /**
    * Add overflow to new page.
    *
@@ -46,7 +46,7 @@ declare class Layout {
    *
    * @returns {void}
    */
-  addOverflowToPage(dest: element, breakToken: any, alreadyRendered: element): void
+  addOverflowToPage(dest: HTMLElement, breakToken: any, alreadyRendered: HTMLElement): void
   /**
    * Add text to new page.
    *
@@ -64,7 +64,7 @@ declare class Layout {
    * @returns {ChildNode}
    *   The cloned node.
    */
-  append(node: element, dest: element, breakToken: any, shallow?: bool, rebuild?: bool): ChildNode
+  append(node: HTMLElement, dest: HTMLElement, breakToken: any, shallow?: boolean, rebuild?: boolean): ChildNode
   rebuildTableFromBreakToken(breakToken: any, dest: any): void
   waitForImages(imgs: any): Promise<void>
   awaitImageLoaded(image: any): Promise<any>
@@ -84,7 +84,7 @@ declare class Layout {
    * @returns {bool}
    *   Whether the element is within bounds.
    */
-  hasOverflow(element: any, bounds?: any[]): bool
+  hasOverflow(element: any, bounds?: any[]): boolean
   /**
    * Returns the first child that overflows the bounds.
    *

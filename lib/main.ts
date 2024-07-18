@@ -6,13 +6,14 @@
  * copyright (c) 2023 xiashui
  * license MIT
  */
+import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import type { PDFOptions } from '../types/index'
 import { domPaged } from './paged'
 import { dom2Content } from './dom2svg'
 import { createPdf } from './pdfMake'
 import { convertToUnit } from './utils'
 
-async function domSvgPdf(options?: PDFOptions): Promise<pdfMake.TCreatedPdf> {
+async function domSvgPdf(options?: PDFOptions): Promise<TCreatedPdf> {
   const paged = await domPaged(options)
   const { pages, size } = paged.chunker
   const { width, height, orientation, format } = size
