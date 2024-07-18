@@ -24,7 +24,9 @@
   "main": "./dist/dom-svg-pdf.umd.cjs",
   "module": "./dist/dom-svg-pdf.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": "^18.0.0 || >=20.0.0"
   },

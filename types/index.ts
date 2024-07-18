@@ -9,6 +9,12 @@ export declare interface PDFOptions {
   bold?: boolean
   docDefinition?: Partial<TDocumentDefinitions>
   pageNumber?: number
+  pagedjsConfig?: Partial<{
+    content: DocumentFragment | string
+    stylesheets: any
+    renderTo: HTMLElement
+    settings: any
+  }>
   pagedjsPlugins?: any[]
   beforePaged?: () => void
   afterPaged?: (paged: Previewer) => void

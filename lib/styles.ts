@@ -25,8 +25,3 @@ export function removeStyles() {
     }
   }
 }
-
-/**
- * 最小 base64 png
- */
-export const minBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='

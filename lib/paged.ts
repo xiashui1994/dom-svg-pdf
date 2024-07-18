@@ -3,12 +3,13 @@ import type { PDFOptions } from '../types/index'
 import { stylesHandler } from './plugins'
 
 export async function domPaged(options?: PDFOptions) {
-  const { pagedjsPlugins = [], beforePaged, afterPaged } = options || {}
+  const { pagedjsConfig = {}, pagedjsPlugins = [], beforePaged, afterPaged } = options || {}
+  const { content, stylesheets, renderTo, settings } = pagedjsConfig
   registerHandlers(stylesHandler(options), ...pagedjsPlugins)
 
   await beforePaged?.()
-  const paged = new Previewer()
-  await paged.preview()
+  const paged = new Previewer(settings)
+  await paged.preview(content, stylesheets, renderTo)
   await afterPaged?.(paged)
 
   return paged

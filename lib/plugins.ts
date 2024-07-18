@@ -1,18 +1,14 @@
-import { Handler, Polisher } from 'pagedjs'
+import { Handler } from 'pagedjs'
 import type { PDFOptions } from '../types/index'
+import { insertStyles } from './dom'
 import { fallbackStyles, removeStyles } from './styles'
 
 export function stylesHandler(options?: PDFOptions) {
   const { docDefinition = {}, katex = false } = options || {}
   const styles = fallbackStyles(docDefinition.defaultStyle?.font, katex)
   class stylesHandler extends Handler {
-    constructor(chunker: any, polisher: any, caller: any) {
-      super(chunker, polisher, caller)
-    }
-
     beforeParsed() {
-      const polisher = new Polisher()
-      polisher.insert(styles)
+      insertStyles(styles)
       removeStyles()
     }
   }

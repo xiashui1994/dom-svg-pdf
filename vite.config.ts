@@ -16,11 +16,10 @@ export default defineConfig({
     },
     copyPublicDir: false,
     rollupOptions: {
-      external: ['dom2svg', 'pagedjs', 'pdfmake/build/pdfmake.min'],
+      external: ['dom2svg', 'pdfmake/build/pdfmake.min'],
       output: {
         globals: {
           'dom2svg': 'dom2svg',
-          'pagedjs': 'pagedjs',
           'pdfmake/build/pdfmake.min': 'pdfmake',
         },
       },
