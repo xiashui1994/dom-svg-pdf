@@ -11,7 +11,6 @@ export function fallbackStyles(font?: string, katex?: boolean) {
 /**
  * 移除不支持的样式
  */
-
 export function removeStyles() {
   const pseudoElements = ['::first-letter', '::first-line']
   const pseudoSelectorRegex = new RegExp(pseudoElements.join('|'))

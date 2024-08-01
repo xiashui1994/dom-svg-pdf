@@ -3,7 +3,7 @@ import type { Content } from 'pdfmake/interfaces'
 import type { PDFOptions } from '../types/index'
 
 export async function dom2svgString(element: HTMLElement, options?: PDFOptions): Promise<string> {
-  const svg = elementToSVG(element)
+  const svg = elementToSVG(element, { inlineSvg: false })
   const svgRootElement = svg.documentElement
   document.body.prepend(svgRootElement)
   try {
@@ -30,9 +30,9 @@ export async function dom2Content(pages: any[], orientation: any, formatSize: an
   const content: Content = []
   pages = pages.filter((_page, index) => !pageNumber || pageNumber === index + 1)
   for (const page of pages) {
-    await beforeToSvg?.(page, pages)
+    await beforeToSvg?.(page)
     const svg = await dom2svgString(page.element, options)
-    await afterToSvg?.(svg, page, pages)
+    await afterToSvg?.(svg, page)
     content.push({ svg, ...(orientation === 'landscape' ? { width: formatSize.height, height: formatSize.width } : formatSize) })
   }
   return content

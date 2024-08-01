@@ -17,9 +17,9 @@ export async function createPdf(content: Content, pageOrientation: PageOrientati
     ...docDefinition,
   }
 
-  await beforePdfMake?.(content, docOptions);
+  await beforePdfMake?.(docOptions);
   (<any>pdfMake).fonts = { ...getFonts(docOptions.defaultStyle?.font === font, katex, fontsPath), ...fonts }
   const PDF = pdfMake.createPdf(docOptions)
-  await afterPdfMake?.(PDF, content, docOptions)
+  await afterPdfMake?.(PDF, docOptions)
   return PDF
 }
