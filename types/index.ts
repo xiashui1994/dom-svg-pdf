@@ -11,7 +11,7 @@ export declare interface PDFOptions {
   pageNumber?: number
   pagedjsConfig?: Partial<{
     content: DocumentFragment | string
-    stylesheets: any
+    stylesheets: any[]
     renderTo: HTMLElement
     settings: any
   }>

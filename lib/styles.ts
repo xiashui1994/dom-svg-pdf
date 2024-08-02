@@ -24,3 +24,30 @@ export function removeStyles() {
     }
   }
 }
+
+/**
+ * 获取所有的样式
+ */
+export function allStylesheets() {
+  const stylesheets = (Array.from(document.styleSheets).map(sheet => sheet.ownerNode) as HTMLElement[]).filter(element => !element.hasAttribute('data-pagedjs-inserted-styles') && !element.hasAttribute('data-pagedjs-ignore') && (!element.getAttribute('media') || element.getAttribute('media')?.includes('screen')))
+  return stylesheets.sort((a, b) => {
+    const position = a.compareDocumentPosition(b)
+    if (position === Node.DOCUMENT_POSITION_PRECEDING)
+      return 1
+    if (position === Node.DOCUMENT_POSITION_FOLLOWING)
+      return -1
+    return 0
+  }).map((element) => {
+    if (element.nodeName === 'STYLE') {
+      const obj: any = {}
+      obj[window.location.href] = element.textContent
+      element.remove()
+      return obj
+    }
+    if (element.nodeName === 'LINK') {
+      element.remove()
+      return (element as HTMLLinkElement).href
+    }
+    return null
+  })
+}

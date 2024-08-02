@@ -7,7 +7,7 @@ export function stylesHandler(options?: PDFOptions) {
   const { docDefinition = {}, katex = false } = options || {}
   const styles = fallbackStyles(docDefinition.defaultStyle?.font, katex)
   class stylesHandler extends Handler {
-    beforeParsed() {
+    afterParsed() {
       insertStyles(styles)
       removeStyles()
     }
