@@ -2,10 +2,11 @@
  * dom-svg-pdf
  * https://github.com/xiashui1994/dom-svg-pdf
  * author xiashui
- * version 1.0.3
+ * version 1.0.4
  * copyright (c) 2023 xiashui
  * license MIT
  */
+import * as paged from 'pagedjs'
 import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import type { PDFOptions } from '../types/index'
 import { domPaged } from './paged'
@@ -23,4 +24,4 @@ async function domSvgPdf(options?: PDFOptions): Promise<TCreatedPdf> {
   return PDF
 }
 
-export { domSvgPdf }
+export { domSvgPdf, paged }
