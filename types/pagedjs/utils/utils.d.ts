@@ -10,9 +10,9 @@ export function UUID(): string
  * Find the position of [element] in [nodeList].
  * @param {Element} element to check
  * @param {NodeList} nodeList to find in
- * @returns {int} an index of the match, or -1 if there is no match
+ * @returns {number} an index of the match, or -1 if there is no match
  */
-export function positionInNodeList(element: Element, nodeList: NodeList): int
+export function positionInNodeList(element: Element, nodeList: NodeList): number
 /**
  * Find a unique CSS selector for a given element
  * @param {Element} ele to check

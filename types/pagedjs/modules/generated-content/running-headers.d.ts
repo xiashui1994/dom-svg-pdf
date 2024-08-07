@@ -18,9 +18,9 @@ declare class RunningHeaders extends Handler {
    * 6) named left & right
    * 7) named first & nth
    * @param {string} [s] selector string
-   * @return {int} weight
+   * @return {number} weight
    */
-  pageWeight(s?: string): int
+  pageWeight(s?: string): number
   /**
    * Orders the selectors based on weight
    *
