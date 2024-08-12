@@ -1,5 +1,6 @@
 import { Previewer, registerHandlers } from 'pagedjs'
 import type { PDFOptions } from '../types/index'
+import { wrapContent } from './dom'
 import { stylesHandler } from './plugins'
 import { allStylesheets } from './styles'
 
@@ -10,7 +11,7 @@ export async function domPaged(options?: PDFOptions) {
 
   await beforePaged?.()
   const paged = new Previewer(settings)
-  await paged.preview(content, [...allStylesheets(), ...stylesheets], renderTo)
+  await paged.preview(wrapContent(content), [...allStylesheets(), ...stylesheets], renderTo)
   await afterPaged?.(paged)
 
   return paged

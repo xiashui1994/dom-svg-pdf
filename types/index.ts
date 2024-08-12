@@ -10,7 +10,7 @@ export declare interface PDFOptions {
   docDefinition?: Partial<TDocumentDefinitions>
   pageNumber?: number
   pagedjsConfig?: Partial<{
-    content: DocumentFragment | string
+    content: HTMLElement
     stylesheets: any[]
     renderTo: HTMLElement
     settings: any
