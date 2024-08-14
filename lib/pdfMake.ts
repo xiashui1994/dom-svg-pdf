@@ -1,9 +1,9 @@
 import pdfMake from 'pdfmake/build/pdfmake.min'
-import type { Content, PageOrientation, PageSize, TDocumentDefinitions } from 'pdfmake/interfaces'
+import type { Content, PageSize, TDocumentDefinitions } from 'pdfmake/interfaces'
 import type { PDFOptions } from '../types/index'
 import { getFonts } from './fonts'
 
-export async function createPdf(content: Content, pageOrientation: PageOrientation | undefined, pageSize: PageSize | undefined, options?: PDFOptions) {
+export async function createPdf(content: Content, pageSize: PageSize, options?: PDFOptions) {
   const font: string = 'LXGWNeoXiHei'
   const { docDefinition = {}, katex = false, fonts = {}, fontsPath = window.location.origin, beforePdfMake, afterPdfMake } = options || {}
 
@@ -13,7 +13,6 @@ export async function createPdf(content: Content, pageOrientation: PageOrientati
     content,
     pageSize,
     pageMargins: [0, 0, 0, 0],
-    pageOrientation,
     ...docDefinition,
   }
 

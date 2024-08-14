@@ -12,7 +12,7 @@ export function convertToUnit(val: any) {
   val = match[1]
   switch (match[3]) {
     case 'px':{
-      val = Math.round(val * 0.75292857248934) // 1px => 0.75292857248934pt
+      val = Math.round(val * 0.75) // 1px => 0.75292857248934pt
       break
     }
     case 'em':

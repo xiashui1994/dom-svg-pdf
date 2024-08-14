@@ -25,15 +25,16 @@ export async function dom2svgString(element: HTMLElement, options?: PDFOptions):
   return new XMLSerializer().serializeToString(svgRootElement)
 }
 
-export async function dom2Content(pages: any[], orientation: any, formatSize: any, options?: PDFOptions): Promise<Content> {
+export async function dom2Content(pages: any[], formatSize: any, options?: PDFOptions): Promise<Content> {
   const { pageNumber, beforeToSvg, afterToSvg } = options || {}
   const content: Content = []
   pages = pages.filter((_page, index) => !pageNumber || pageNumber === index + 1)
   for (const page of pages) {
     await beforeToSvg?.(page)
-    const svg = await dom2svgString(page.element, options)
+    page.style.display = 'block'
+    const svg = await dom2svgString(page, options)
     await afterToSvg?.(svg, page)
-    content.push({ svg, ...(orientation === 'landscape' ? { width: formatSize.height, height: formatSize.width } : formatSize) })
+    content.push({ svg, ...formatSize })
   }
   return content
 }

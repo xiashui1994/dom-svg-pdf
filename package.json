@@ -1,7 +1,7 @@
 {
   "name": "dom-svg-pdf",
   "type": "module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "dom-svg-pdf",
   "author": "xiashui",
   "license": "MIT",
@@ -38,8 +38,8 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@vivliostyle/core": "^2.30.2",
     "dom2svg": "^1.0.9",
-    "pagedjs": "0.5.0-beta.1",
     "pdfmake": "^0.2.10"
   },
   "devDependencies": {

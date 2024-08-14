@@ -1,22 +1,32 @@
 /**
- * 页面上插入样式
+ * 重置容器样式
+ * @param ctx window
+ * @param el string
  */
-export function insertStyles(styles: string) {
-  const style = document.createElement('style')
-  style.innerHTML = styles
-  document.head.appendChild(style)
+export function resetContainerStyle(ctx: Window, el: string, styles: Record<string, string>) {
+  const container = ctx.document.querySelector(el) as HTMLElement
+  if (!container)
+    return
+  Object.assign(container.style, styles)
 }
 
-export function wrapContent(element?: HTMLElement) {
-  const body = document.querySelector('body') as HTMLBodyElement
-  let template = body.querySelector(':scope > template[data-ref=\'pagedjs-content\']') as HTMLTemplateElement
-  if (!template) {
-    const content = element || body
-    template = document.createElement('template')
-    template.dataset.ref = 'pagedjs-content'
-    template.innerHTML = content.innerHTML
-    content.innerHTML = ''
-    body.appendChild(template)
-  }
-  return template.content
+/**
+ * 获取容器大小
+ * @param ctx window
+ * @param el string
+ */
+export function getContainerSize(ctx: Window, el: string) {
+  const container = ctx.document.querySelector(el) as HTMLElement
+  const { width, height } = container?.style || { width: '0px', height: '0px' }
+  return { width, height }
+}
+
+/**
+ * 获取序列化元素列表
+ * @param ctx window
+ * @param el string
+ */
+export function getSerializedElements(ctx: Window, el: string) {
+  const elements = ctx.document.querySelectorAll(el)
+  return Array.from(elements) as HTMLElement[]
 }

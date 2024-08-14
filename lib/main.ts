@@ -6,22 +6,20 @@
  * copyright (c) 2023 xiashui
  * license MIT
  */
-import * as paged from 'pagedjs'
 import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import type { PDFOptions } from '../types/index'
-import { domPaged } from './paged'
+import { domPaged } from './vivliostyle'
 import { dom2Content } from './dom2svg'
 import { createPdf } from './pdfMake'
 import { convertToUnit } from './utils'
 
-async function domSvgPdf(options?: PDFOptions): Promise<TCreatedPdf> {
-  const paged = await domPaged(options)
-  const { pages, size } = paged.chunker
-  const { width, height, orientation, format } = size
-  const formatSize = { width: convertToUnit(`${width.value}${width.unit}`) || width.value, height: convertToUnit(`${height.value}${height.unit}`) || height.value }
-  const content = await dom2Content(pages, orientation, formatSize, options)
-  const PDF = await createPdf(content, orientation, format || formatSize, options)
+async function domSvgPdf(el: string, options?: PDFOptions): Promise<TCreatedPdf> {
+  const paged = await domPaged(document.querySelector(el)!, options)
+  const { width, height, pages } = paged
+  const formatSize = { width: convertToUnit(width) || 0, height: convertToUnit(height) || 0 }
+  const content = await dom2Content(pages, formatSize, options)
+  const PDF = await createPdf(content, formatSize, options)
   return PDF
 }
 
-export { domSvgPdf, paged }
+export { domSvgPdf }
