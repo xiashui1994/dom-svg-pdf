@@ -6,7 +6,7 @@ import { getContainerSize, getSerializedElements, resetContainerStyle } from './
 export async function domPaged(el: HTMLElement, options?: PDFOptions): Promise<Paged> {
   const { docDefinition = {}, katex = false, printConfig = {} } = options || {}
   return new Promise((resolve, reject) => {
-    const htmlDoc = `<!doctype html><html><head>${allStylesheets()}<style>${fallbackStyles(docDefinition.defaultStyle?.font, katex)}</style></head><body>${el.innerHTML}</body></html>`
+    const htmlDoc = `<!doctype html><html><head>${allStylesheets()}<style>${fallbackStyles(docDefinition.defaultStyle?.font, katex)}</style></head><body>${el.outerHTML}</body></html>`
     const config = {
       title: document.title || 'dom-svg-pdf',
       printCallback: (iframeWin: Window) => {

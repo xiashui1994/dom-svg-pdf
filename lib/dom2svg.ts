@@ -5,7 +5,6 @@ import type { PDFOptions } from '../types/index'
 export async function dom2svgString(element: HTMLElement, options?: PDFOptions): Promise<string> {
   const svg = elementToSVG(element, { inlineSvg: false })
   const svgRootElement = svg.documentElement
-  document.body.prepend(svgRootElement)
   try {
     if (options?.bold) {
       for (const text of Array.from(svgRootElement.querySelectorAll('text'))) {
@@ -20,7 +19,7 @@ export async function dom2svgString(element: HTMLElement, options?: PDFOptions):
     await inlineResources(svgRootElement, { cache: 'no-cache' })
   }
   finally {
-    svgRootElement.remove()
+    element.style.display = 'none'
   }
   return new XMLSerializer().serializeToString(svgRootElement)
 }
