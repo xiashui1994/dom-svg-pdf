@@ -7,7 +7,7 @@ export async function domPaged(el: HTMLElement, options?: PDFOptions): Promise<P
   const { docDefinition = {}, katex = false, printConfig = {}, printPlugins = [], beforePaged, afterPaged } = options || {}
   await beforePaged?.()
   return new Promise((resolve, reject) => {
-    const htmlDoc = `<!doctype html><html><head>${allStylesheets()}<style>${fallbackStyles(docDefinition.defaultStyle?.font, katex)}</style></head><body>${el.outerHTML}</body></html>`
+    const htmlDoc = `<!doctype html><html><head>${allStylesheets()}<style>${fallbackStyles(docDefinition.defaultStyle?.font, katex)}</style></head><body>${el.innerHTML}</body></html>`
     const { printCallback, ...rest } = printConfig
     const config = {
       title: document.title || 'dom-svg-pdf',
