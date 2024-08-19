@@ -28,11 +28,11 @@ export async function dom2Content(pages: any[], formatSize: any, options?: PDFOp
   const { pageNumber, beforeToSvg, afterToSvg } = options || {}
   const content: Content = []
   pages = pages.filter((_page, index) => !pageNumber || pageNumber === index + 1)
-  for (const page of pages) {
-    await beforeToSvg?.(page)
+  for (const [index, page] of pages.entries()) {
+    await beforeToSvg?.(page, index, pages.length)
     page.style.display = 'block'
     const svg = await dom2svgString(page, options)
-    await afterToSvg?.(svg, page)
+    await afterToSvg?.(svg, index)
     content.push({ svg, ...formatSize })
   }
   return content

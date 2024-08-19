@@ -1,6 +1,6 @@
 import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import type { TDocumentDefinitions, TFontDictionary } from 'pdfmake/interfaces'
-import type { PrintConfig } from '@vivliostyle/core'
+import type { PrintConfig, registerHook } from '@vivliostyle/core'
 
 export declare interface PDFOptions {
   katex?: boolean
@@ -10,8 +10,11 @@ export declare interface PDFOptions {
   docDefinition?: Partial<TDocumentDefinitions>
   pageNumber?: number
   printConfig?: Partial<PrintConfig>
-  beforeToSvg?: (page: any) => void
-  afterToSvg?: (svg: string, page: any) => void
+  printPlugins?: Parameters<typeof registerHook>[]
+  beforePaged?: () => void
+  afterPaged?: (paged: Paged) => void
+  beforeToSvg?: (page: HTMLElement, index: number, total: number) => void
+  afterToSvg?: (svg: string, index: number) => void
   beforePdfMake?: (docDefinition: TDocumentDefinitions) => void
   afterPdfMake?: (pdf: TCreatedPdf, docDefinition: TDocumentDefinitions) => void
 }

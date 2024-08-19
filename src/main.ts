@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     katex: true,
     bold: true,
   })
-  pdf.getBlob((blob) => {
+  pdf!.getBlob((blob) => {
     const url = URL.createObjectURL(blob)
     window.open(url)
   })
