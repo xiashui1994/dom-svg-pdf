@@ -1,7 +1,7 @@
 import { CoreViewer } from '@vivliostyle/core'
 import { createIframe } from './dom'
 
-const srcdoc = `
+const content = `
   <!DOCTYPE html>
   <html data-vivliostyle-paginated="true">
     <head>
@@ -54,7 +54,7 @@ function preparePrint(iframeWin: Window, htmlDoc: string): Promise<CoreViewer> {
 }
 
 export async function printHTML(htmlDoc: string) {
-  const iframe = await createIframe(srcdoc)
+  const iframe = await createIframe(content, { width: '0', height: '0', borderWidth: '0' })
   const iframeWin = iframe.contentWindow!
   const Viewer = await preparePrint(iframeWin, htmlDoc)
   const pageSizes = Viewer.getPageSizes()

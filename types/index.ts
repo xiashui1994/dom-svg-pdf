@@ -14,7 +14,7 @@ export declare interface PDFOptions {
   beforePaged?: () => void
   afterPaged?: (paged: Paged) => void
   beforeToSvg?: (page: HTMLElement, index: number, total: number) => void
-  afterToSvg?: (svg: string, index: number) => void
+  afterToSvg?: (svg: string, index: number, total: number) => void
   beforePdfMake?: (docDefinition: TDocumentDefinitions) => void
   afterPdfMake?: (pdf: TCreatedPdf, docDefinition: TDocumentDefinitions) => void
 }

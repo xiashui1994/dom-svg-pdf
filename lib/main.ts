@@ -13,10 +13,9 @@ import { createPdf } from './pdfMake'
 import { convertToUnit } from './utils'
 
 async function domSvgPdf<T>(el: string, options?: PDFOptions & { print?: T }): Promise<ReturnType<T>> {
-  const paged = await domPaged(document.querySelector(el)!, options)
-  if (options?.print) {
+  const paged = await domPaged(window.document.querySelector(el)!, options)
+  if (options?.print)
     return paged.iframeWin as ReturnType<T>
-  }
   const { width, height, pages } = paged
   const formatSize = { width: convertToUnit(width) || 0, height: convertToUnit(height) || 0 }
   const content = await dom2Content(pages, formatSize, options)
