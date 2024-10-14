@@ -2,7 +2,7 @@
  * dom-svg-pdf
  * https://github.com/xiashui1994/dom-svg-pdf
  * author xiashui
- * version 1.1.1
+ * version 1.1.2
  * copyright (c) 2023 xiashui
  * license MIT
  */
