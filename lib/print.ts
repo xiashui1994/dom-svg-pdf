@@ -1,5 +1,6 @@
 import { CoreViewer } from '@vivliostyle/core'
 import { createIframe } from './dom'
+import { convertToUnit } from './utils'
 
 const content = `
   <!DOCTYPE html>
@@ -58,5 +59,7 @@ export async function printHTML(htmlDoc: string) {
   const iframeWin = iframe.contentWindow!
   const Viewer = await preparePrint(iframeWin, htmlDoc)
   const pageSizes = Viewer.getPageSizes()
-  return { iframeWin, ...pageSizes[0] }
+  const { width, height } = pageSizes[0] || {}
+  const formatSize = { width: convertToUnit(`${width}px`) || 0, height: convertToUnit(`${height}px`) || 0 }
+  return { iframeWin, ...formatSize }
 }

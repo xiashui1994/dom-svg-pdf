@@ -6,6 +6,7 @@ import { simulateBold } from './dom'
 export async function dom2svgString(element: HTMLElement, options?: PDFOptions): Promise<string> {
   const svg = elementToSVG(element, { inlineSvg: false })
   const svgRootElement = svg.documentElement
+  svgRootElement.style.display = 'none'
   window.document.body.prepend(svgRootElement)
   try {
     if (options?.bold)
