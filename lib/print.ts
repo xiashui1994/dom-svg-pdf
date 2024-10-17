@@ -60,6 +60,6 @@ export async function printHTML(htmlDoc: string) {
   const Viewer = await preparePrint(iframeWin, htmlDoc)
   const pageSizes = Viewer.getPageSizes()
   const { width, height } = pageSizes[0] || {}
-  const formatSize = { width: convertToUnit(`${width}px`) || 0, height: convertToUnit(`${height}px`) || 0 }
-  return { iframeWin, ...formatSize }
+  const pageSize = { width: convertToUnit(`${width}px`) || 0, height: convertToUnit(`${height}px`) || 0 }
+  return { iframeWin, pageSize }
 }

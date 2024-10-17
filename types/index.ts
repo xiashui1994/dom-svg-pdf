@@ -19,9 +19,13 @@ export declare interface PDFOptions {
   afterPdfMake?: (pdf: TCreatedPdf, docDefinition: TDocumentDefinitions) => void
 }
 
-export declare interface Paged {
+export declare interface PageSize {
   width: number
   height: number
+}
+
+export declare interface Paged {
+  pageSize: PageSize
   pages: HTMLElement[]
 }
 

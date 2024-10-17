@@ -15,10 +15,9 @@ async function domSvgPdf<T>(el: string, options?: PDFOptions & { print?: T }): P
   const paged = await domPaged(window.document.querySelector(el)!, options)
   if (options?.print)
     return paged.iframeWin as ReturnType<T>
-  const { width, height, pages } = paged
-  const formatSize = { width, height }
-  const content = await dom2Content(pages, formatSize, options)
-  const PDF = await createPdf(content, formatSize, options)
+  const { pageSize, pages } = paged
+  const content = await dom2Content(pages, pageSize, options)
+  const PDF = await createPdf(content, pageSize, options)
   return PDF as ReturnType<T>
 }
 

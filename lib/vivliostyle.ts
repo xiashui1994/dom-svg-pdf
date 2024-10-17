@@ -9,8 +9,8 @@ export async function domPaged(el: HTMLElement, options?: PDFOptions): Promise<P
   await beforePaged?.()
   const htmlDoc = `<!doctype html><html><head>${allStylesheets()}<style>${fallbackStyles(docDefinition.defaultStyle?.font, katex)}</style></head><body>${el.innerHTML}</body></html>`
   printPlugins.forEach(p => plugin.registerHook(...p))
-  const { width, height, iframeWin } = await printHTML(htmlDoc)
+  const { pageSize, iframeWin } = await printHTML(htmlDoc)
   const pages = getSerializedElements(iframeWin, '[data-vivliostyle-page-container]')
-  await afterPaged?.({ width, height, pages })
-  return { width, height, pages, iframeWin }
+  await afterPaged?.({ pageSize, pages })
+  return { pageSize, pages, iframeWin }
 }
