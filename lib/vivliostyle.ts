@@ -1,8 +1,8 @@
+import type { Paged, PDFOptions } from '../types/index'
 import { plugin } from '@vivliostyle/core'
-import type { PDFOptions, Paged } from '../types/index'
+import { getSerializedElements } from './dom'
 import { printHTML } from './print'
 import { allStylesheets, fallbackStyles } from './styles'
-import { getSerializedElements } from './dom'
 
 export async function domPaged(el: HTMLElement, options?: PDFOptions): Promise<Paged & { iframeWin: Window }> {
   const { docDefinition = {}, katex = false, printPlugins = [], beforePaged, afterPaged } = options || {}

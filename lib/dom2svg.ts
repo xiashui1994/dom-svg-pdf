@@ -1,6 +1,6 @@
-import { elementToSVG, inlineResources } from 'dom2svg'
 import type { Content } from 'pdfmake/interfaces'
-import type { PDFOptions, Paged } from '../types/index'
+import type { Paged, PDFOptions } from '../types/index'
+import { elementToSVG, inlineResources } from 'dom2svg'
 import { simulateBold } from './dom'
 
 export async function dom2svgString(element: HTMLElement, options?: PDFOptions): Promise<string> {

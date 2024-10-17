@@ -1,6 +1,6 @@
+import type { registerHook } from '@vivliostyle/core'
 import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import type { TDocumentDefinitions, TFontDictionary } from 'pdfmake/interfaces'
-import type { registerHook } from '@vivliostyle/core'
 
 export declare interface PDFOptions {
   katex?: boolean

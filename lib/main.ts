@@ -7,9 +7,9 @@
  * license MIT
  */
 import type { PDFOptions, ReturnType } from '../types/index'
-import { domPaged } from './vivliostyle'
 import { dom2Content } from './dom2svg'
 import { createPdf } from './pdfMake'
+import { domPaged } from './vivliostyle'
 
 async function domSvgPdf<T>(el: string, options?: PDFOptions & { print?: T }): Promise<ReturnType<T>> {
   const paged = await domPaged(window.document.querySelector(el)!, options)

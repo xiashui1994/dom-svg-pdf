@@ -1,6 +1,6 @@
-import pdfMake from 'pdfmake/build/pdfmake.min'
 import type { Content, PageSize, TDocumentDefinitions } from 'pdfmake/interfaces'
 import type { PDFOptions } from '../types/index'
+import pdfMake from 'pdfmake/build/pdfmake.min'
 import { getFonts } from './fonts'
 
 export async function createPdf(content: Content, pageSize: PageSize, options?: PDFOptions) {
