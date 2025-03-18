@@ -77,11 +77,11 @@ pdf.getBlob((blob) => {
 
 #### `fonts`
 
-- 自定义字体，默认字体为 [LXGWNeoXiHei](https://github.com/lxgw/LxgwNeoXiHei), 详情请参考 [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
+- 自定义字体，默认字体为 [Roboto], 详情请参考 [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
 
-#### `fontsPath`
+#### `vfs`
 
-- 自定义字体路径，默认值为 `window.location.origin`
+- 虚拟文件系统，详情请参考 [Virtual File System](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/vfs/)
 
 #### `bold`
 
@@ -137,4 +137,3 @@ print 为 `true` 时，唤起浏览器打印功能（打印内容自动分页）
 - [dom2svg](https://github.com/xiashui1994/dom2svg)：将给定 HTML DOM 节点转换为可访问的 SVG
 - [pdfMake](https://github.com/bpampuch/pdfmake)：纯 JavaScript 中用于服务器端和客户端的 PDF 文档生成库
 - [katex](https://github.com/KaTeX/KaTeX)：快速数学公式渲染
-- [LXGWNeoXiHei](https://github.com/lxgw/LxgwNeoXiHei)：源自 IPAex Gothic 的简体中文无衬线字体

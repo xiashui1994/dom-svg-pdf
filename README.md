@@ -77,11 +77,11 @@ pdf.getBlob((blob) => {
 
 #### `fonts`
 
-- Custom fonts. The default font is [LXGWNeoXiHei](https://github.com/lxgw/LxgwNeoXiHei). For more details, refer to [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
+- Custom fonts. The default font is [Roboto]. For more details, refer to [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
 
-#### `fontsPath`
+#### `vfs`
 
-- Path to custom fonts. The default value is `window.location.origin`
+- Virtual file system. For more details, refer to [Virtual File System](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/vfs/)
 
 #### `bold`
 
@@ -137,4 +137,3 @@ Lifecycle hook called after generating the PDF object. Parameters: `pdf` (PDF ob
 - [dom2svg](https://github.com/xiashui1994/dom2svg): Library to convert a given HTML DOM node into an accessible SVG "screenshot"
 - [pdfMake](https://github.com/bpampuch/pdfmake): PDF document generation library for server-side and client-side in pure JavaScript
 - [katex](https://github.com/KaTeX/KaTeX): Fast math typesetting for the web
-- [LXGWNeoXiHei](https://github.com/lxgw/LxgwNeoXiHei): A Simplified Chinese sans-serif font derived from IPAex Gothic
