@@ -34,3 +34,10 @@ export function convertToUnit(val: any) {
   }
   return val * 1
 }
+
+/**
+ * 获取 vfs 字体
+ */
+export function getVFS(base64: string) {
+  return base64.split(',')[1]
+}

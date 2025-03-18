@@ -1,11 +1,11 @@
 import type { registerHook } from '@vivliostyle/core'
-import type { TCreatedPdf } from 'pdfmake/build/pdfmake'
+import type { TCreatedPdf, vfs } from 'pdfmake/build/pdfmake'
 import type { TDocumentDefinitions, TFontDictionary } from 'pdfmake/interfaces'
 
 export declare interface PDFOptions {
   katex?: boolean
   fonts?: TFontDictionary
-  fontsPath?: string
+  vfs?: VirtualFonts
   bold?: boolean
   docDefinition?: Partial<TDocumentDefinitions>
   pageNumber?: number
@@ -30,3 +30,5 @@ export declare interface Paged {
 }
 
 export declare type ReturnType<T> = T extends true ? Window : TCreatedPdf
+
+export declare type VirtualFonts = typeof vfs

@@ -1,31 +1,48 @@
-export function getFonts(base: boolean, katex: boolean, fontsPath: string) {
-  const createFont = (normal: string, bold?: string, italics?: string, bolditalics?: string) => {
-    return {
-      normal: `${fontsPath}${normal}`,
-      bold: `${fontsPath}${bold || normal}`,
-      italics: `${fontsPath}${italics || normal}`,
-      bolditalics: `${fontsPath}${bolditalics || bold || normal}`,
+import type { TFontDictionary } from 'pdfmake/interfaces'
+import type { VirtualFonts } from '../types/index'
+import { KaTeX_AMS_fonts, KaTeX_AMS_vfs } from '../fonts/KaTeX_AMS'
+import { KaTeX_Caligraphic_fonts, KaTeX_Caligraphic_vfs } from '../fonts/KaTeX_Caligraphic'
+import { KaTeX_Fraktur_fonts, KaTeX_Fraktur_vfs } from '../fonts/KaTeX_Fraktur'
+import { KaTeX_Main_fonts, KaTeX_Main_vfs } from '../fonts/KaTeX_Main'
+import { KaTeX_Math_fonts, KaTeX_Math_vfs } from '../fonts/KaTeX_Math'
+import { KaTeX_SansSerif_fonts, KaTeX_SansSerif_vfs } from '../fonts/KaTeX_SansSerif'
+import { KaTeX_Script_fonts, KaTeX_Script_vfs } from '../fonts/KaTeX_Script'
+import { KaTeX_Size1_fonts, KaTeX_Size1_vfs } from '../fonts/KaTeX_Size1'
+import { KaTeX_Size2_fonts, KaTeX_Size2_vfs } from '../fonts/KaTeX_Size2'
+import { KaTeX_Size3_fonts, KaTeX_Size3_vfs } from '../fonts/KaTeX_Size3'
+import { KaTeX_Size4_fonts, KaTeX_Size4_vfs } from '../fonts/KaTeX_Size4'
+import { KaTeX_Typewriter_fonts, KaTeX_Typewriter_vfs } from '../fonts/KaTeX_Typewriter'
+import { Roboto_fonts, Roboto_vfs } from '../fonts/Roboto'
+
+export function setFonts(pdfMake: any, base: boolean, katex: boolean, fontContainer: { vfs: VirtualFonts, fonts: TFontDictionary }) {
+  const addVirtualFileSystem = (vfs: VirtualFonts) => {
+    for (const key in vfs) {
+      if (Object.prototype.hasOwnProperty.call(vfs, key))
+        pdfMake.vfs = { ...pdfMake.vfs, [key]: vfs[key] }
     }
   }
 
-  const baseFonts = {
-    LXGWNeoXiHei: createFont('/fonts/LXGWNeoXiHei.ttf'),
+  const addFontContainer = (vfs: VirtualFonts, fonts: TFontDictionary) => {
+    addVirtualFileSystem(vfs)
+    pdfMake.addFonts(fonts)
   }
 
-  const katexFonts = {
-    KaTeX_AMS: createFont('/fonts/KaTeX_AMS-Regular.ttf'),
-    KaTeX_Caligraphic: createFont('/fonts/KaTeX_Caligraphic-Regular.ttf', '/fonts/KaTeX_Caligraphic-Bold.ttf'),
-    KaTeX_Fraktur: createFont('/fonts/KaTeX_Fraktur-Regular.ttf', '/fonts/KaTeX_Fraktur-Bold.ttf'),
-    KaTeX_Main: createFont('/fonts/KaTeX_Main-Regular.ttf', '/fonts/KaTeX_Main-Bold.ttf', '/fonts/KaTeX_Main-Italic.ttf', '/fonts/KaTeX_Main-BoldItalic.ttf'),
-    KaTeX_Math: createFont('/fonts/KaTeX_Math-Italic.ttf', '/fonts/KaTeX_Math-BoldItalic.ttf'),
-    KaTeX_SansSerif: createFont('/fonts/KaTeX_SansSerif-Regular.ttf', '/fonts/KaTeX_SansSerif-Bold.ttf', '/fonts/KaTeX_SansSerif-Italic.ttf'),
-    KaTeX_Script: createFont('/fonts/KaTeX_Script-Regular.ttf'),
-    KaTeX_Size1: createFont('/fonts/KaTeX_Size1-Regular.ttf'),
-    KaTeX_Size2: createFont('/fonts/KaTeX_Size2-Regular.ttf'),
-    KaTeX_Size3: createFont('/fonts/KaTeX_Size3-Regular.ttf'),
-    KaTeX_Size4: createFont('/fonts/KaTeX_Size4-Regular.ttf'),
-    KaTeX_Typewriter: createFont('/fonts/KaTeX_Typewriter-Regular.ttf'),
+  base && addFontContainer(Roboto_vfs, Roboto_fonts)
+
+  if (katex) {
+    addFontContainer(KaTeX_AMS_vfs, KaTeX_AMS_fonts)
+    addFontContainer(KaTeX_Caligraphic_vfs, KaTeX_Caligraphic_fonts)
+    addFontContainer(KaTeX_Fraktur_vfs, KaTeX_Fraktur_fonts)
+    addFontContainer(KaTeX_Main_vfs, KaTeX_Main_fonts)
+    addFontContainer(KaTeX_Math_vfs, KaTeX_Math_fonts)
+    addFontContainer(KaTeX_SansSerif_vfs, KaTeX_SansSerif_fonts)
+    addFontContainer(KaTeX_Script_vfs, KaTeX_Script_fonts)
+    addFontContainer(KaTeX_Size1_vfs, KaTeX_Size1_fonts)
+    addFontContainer(KaTeX_Size2_vfs, KaTeX_Size2_fonts)
+    addFontContainer(KaTeX_Size3_vfs, KaTeX_Size3_fonts)
+    addFontContainer(KaTeX_Size4_vfs, KaTeX_Size4_fonts)
+    addFontContainer(KaTeX_Typewriter_vfs, KaTeX_Typewriter_fonts)
   }
 
-  return { ...(base ? baseFonts : {}), ...(katex ? katexFonts : {}) }
+  addFontContainer(fontContainer.vfs, fontContainer.fonts)
 }

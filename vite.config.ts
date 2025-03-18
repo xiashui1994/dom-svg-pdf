@@ -16,11 +16,12 @@ export default defineConfig({
     },
     copyPublicDir: false,
     rollupOptions: {
-      external: ['dom2svg', 'pdfmake/build/pdfmake.min'],
+      external: ['dom2svg', 'pdfmake/build/pdfmake.min', '@vivliostyle/core'],
       output: {
         globals: {
           'dom2svg': 'dom2svg',
           'pdfmake/build/pdfmake.min': 'pdfmake',
+          '@vivliostyle/core': 'vivliostyle',
         },
       },
     },

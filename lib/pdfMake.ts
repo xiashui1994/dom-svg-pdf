@@ -1,11 +1,11 @@
 import type { Content, PageSize, TDocumentDefinitions } from 'pdfmake/interfaces'
 import type { PDFOptions } from '../types/index'
 import pdfMake from 'pdfmake/build/pdfmake.min'
-import { getFonts } from './fonts'
+import { setFonts } from './fonts'
 
 export async function createPdf(content: Content, pageSize: PageSize, options?: PDFOptions) {
-  const font: string = 'LXGWNeoXiHei'
-  const { docDefinition = {}, katex = false, fonts = {}, fontsPath = window.location.origin, beforePdfMake, afterPdfMake } = options || {}
+  const font: string = 'Roboto'
+  const { docDefinition = {}, katex = false, vfs = {}, fonts = {}, beforePdfMake, afterPdfMake } = options || {}
 
   // pdfMake 配置
   const docOptions: TDocumentDefinitions = {
@@ -16,8 +16,8 @@ export async function createPdf(content: Content, pageSize: PageSize, options?: 
     ...docDefinition,
   }
 
-  await beforePdfMake?.(docOptions);
-  (<any>pdfMake).fonts = { ...getFonts(docOptions.defaultStyle?.font === font, katex, fontsPath), ...fonts }
+  await beforePdfMake?.(docOptions)
+  setFonts(pdfMake, docOptions.defaultStyle?.font === font, katex, { vfs, fonts })
   const PDF = pdfMake.createPdf(docOptions)
   await afterPdfMake?.(PDF, docOptions)
   return PDF

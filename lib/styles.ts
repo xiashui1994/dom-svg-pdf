@@ -5,7 +5,7 @@
 export function fallbackStyles(font?: string, katex?: boolean) {
   if (!katex)
     return ''
-  return `.latin_fallback, .cyrillic_fallback, .armenian_fallback, .brahmic_fallback, .georgian_fallback, .cjk_fallback, .hangul_fallback { font-family: ${font || 'LXGWNeoXiHei'}; }`
+  return `.latin_fallback, .cyrillic_fallback, .armenian_fallback, .brahmic_fallback, .georgian_fallback, .cjk_fallback, .hangul_fallback { font-family: ${font || 'Roboto'}; }`
 }
 
 /**
