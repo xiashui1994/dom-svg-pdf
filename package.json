@@ -1,7 +1,7 @@
 {
   "name": "dom-svg-pdf",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "dom-svg-pdf",
   "author": "xiashui",
   "license": "MIT",
@@ -39,20 +39,20 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vivliostyle/core": "^2.31.1",
+    "@vivliostyle/core": "^2.32.0",
     "dom2svg": "^1.0.9",
-    "pdfmake": "^0.2.18"
+    "pdfmake": "^0.2.20"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/pdfmake": "^0.2.11",
-    "eslint": "^9.22.0",
+    "eslint": "^9.26.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.0",
-    "typescript": "^5.8.2",
-    "vite": "^6.2.2",
+    "lint-staged": "^16.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.3"
   }
 }
