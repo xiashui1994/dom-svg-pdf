@@ -1,5 +1,5 @@
 import { getVFS } from '../lib/utils'
-import KaTeX_Size2_Regular from '/fonts/KaTeX_Size1-Regular.ttf?inline'
+import KaTeX_Size2_Regular from '/fonts/KaTeX_Size2-Regular.ttf?inline'
 
 export const KaTeX_Size2_vfs = {
   'KaTeX_Size2-Regular.ttf': getVFS(KaTeX_Size2_Regular),
