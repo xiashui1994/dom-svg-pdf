@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@vivliostyle/core": "^2.32.0",
-    "dom2svg": "^1.0.9",
+    "dom2svg": "^1.0.10",
     "pdfmake": "^0.2.20"
   },
   "devDependencies": {
