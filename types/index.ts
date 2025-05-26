@@ -32,3 +32,9 @@ export declare interface Paged {
 export declare type ReturnType<T> = T extends true ? Window : TCreatedPdf
 
 export declare type VirtualFonts = typeof vfs
+
+export declare interface ElOptions {
+  el: string
+  stylesheet?: string
+  allStylesheets?: boolean
+}

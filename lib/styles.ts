@@ -13,6 +13,11 @@ export function patchStyles(font?: string, katex?: boolean) {
 /**
  * 获取所有的样式
  */
-export function allStylesheets() {
+export function getAllStylesheets() {
   return Array.from(window.document.querySelectorAll('style, link[rel="stylesheet"]')).map(element => element.outerHTML).join('')
 }
+
+/**
+ * 通用样式
+ */
+export const commonCSS = 'html,body{ -webkit-user-select:initial;-moz-user-select:initial;user-select:initial;-webkit-text-size-adjust:none;-moz-text-size-adjust:none;text-size-adjust:none; }'

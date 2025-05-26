@@ -34,27 +34,36 @@ const content = `
     </body>
   </html>`
 
-function preparePrint(iframeWin: Window, htmlDoc: string): Promise<CoreViewer> {
-  const docBlob = new Blob([htmlDoc], { type: 'text/html' })
-  const docURL = URL.createObjectURL(docBlob)
+function preparePrint(iframeWin: Window, htmlDoc: string | string[]): Promise<CoreViewer> {
+  const objectUrls: string[] = []
+  const options = (Array.isArray(htmlDoc) ? htmlDoc : [htmlDoc]).map((doc) => {
+    const docBlob = new Blob([doc], { type: 'text/html' })
+    const docURL = URL.createObjectURL(docBlob)
+    objectUrls.push(docURL)
+    return { url: docURL }
+  })
+  const viewportElement = iframeWin.document.body.firstElementChild as HTMLElement
   const Viewer = new CoreViewer({
-    viewportElement: iframeWin.document.body.firstElementChild as HTMLElement,
+    viewportElement,
     window: iframeWin,
     debug: true,
   }, {
     pixelRatio: 0,
     zoom: 1,
   })
-  return new Promise((resolve) => {
-    Viewer.addListener('readystatechange', () => {
-      if (Viewer.readyState === 'complete')
+  return new Promise<CoreViewer>((resolve) => {
+    const handleReadyStateChange = () => {
+      if (Viewer.readyState === 'complete') {
+        objectUrls.forEach(url => URL.revokeObjectURL(url))
         resolve(Viewer)
-    })
-    Viewer.loadDocument({ url: docURL })
+      }
+    }
+    Viewer.addListener('readystatechange', handleReadyStateChange)
+    Viewer.loadDocument(options)
   })
 }
 
-export async function printHTML(htmlDoc: string) {
+export async function printHTML(htmlDoc: string | string[]) {
   const iframe = await createIframe(content, { width: '0', height: '0', borderWidth: '0' })
   const iframeWin = iframe.contentWindow!
   const Viewer = await preparePrint(iframeWin, htmlDoc)
