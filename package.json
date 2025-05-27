@@ -1,7 +1,7 @@
 {
   "name": "dom-svg-pdf",
   "type": "module",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "dom-svg-pdf",
   "author": "xiashui",
   "license": "MIT",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@vivliostyle/core": "^2.32.0",
-    "dom2svg": "^1.0.10",
+    "dom2svg": "^1.0.11",
     "pdfmake": "^0.2.20"
   },
   "devDependencies": {
