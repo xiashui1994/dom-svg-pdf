@@ -15,125 +15,244 @@
   </a>
 </p>
 
-<p align="center">将 HTML DOM 节点转换为 PDF</p>
+<p align="center">高质量的 HTML 转 PDF 解决方案 - 支持数学公式、自定义字体、精确分页</p>
 
 <p align="center"><a href="README.md">English</a> | 简体中文</p>
 
-## 简介
+---
 
-`dom-svg-pdf` 不依赖浏览器的打印功能，可以直接将网页导出为 PDF。
+## ✨ 核心特性
 
-## 示例
+- 🚀 **无需浏览器打印** - 完全基于 Web 技术栈，精确控制 PDF 输出
+- 📄 **智能分页** - 基于 CSS Paged Media 标准的专业排版
+- 🧮 **数学公式** - 完整支持 KaTeX 数学公式渲染
+- 🎨 **自定义字体** - 支持中文字体和自定义字体加载
+- 📱 **跨平台兼容** - 支持 PC 端和移动端
+- ⚡ **高性能** - 支持单页导出和批量处理
+
+## 🎬 在线演示
 
 在线预览：https://dom-svg-pdf.vercel.app
 
-## 原理
+## 💡 工作原理
 
-1. 将 HTML 进行分页（基于 CSS 分页媒体）
-2. 将分页后的 HTML 转换为 SVG
-3. 将 SVG 写入 PDF
+`dom-svg-pdf` 采用三阶段转换流程：
 
-## 特点
-
-- 兼容 PC 端和移动端
-- 自动分页导出
-- 基于 CSS 分页媒体
-- 支持数学公式
-- 支持自定义字体
-- 支持单页导出
-
-## 安装
-
-```sh
-pnpm/npm/yarn i dom-svg-pdf
+```
+HTML DOM → 分页处理 → SVG 转换 → PDF 生成
+             ↓          ↓         ↓
+         vivliostyle → dom2svg → pdfMake
 ```
 
-## 使用
+1. **智能分页**：使用 `vivliostyle.js` 基于 CSS Paged Media 标准进行专业排版
+2. **精确转换**：通过 `dom2svg` 将 HTML 元素精确转换为 SVG 图形
+3. **PDF 生成**：使用 `pdfMake` 将 SVG 内容写入 PDF 文档
 
-```js
+这种方式确保了输出的 PDF 与原始 HTML 在视觉上完全一致。
+
+
+## 🚀 快速开始
+
+### 基础安装
+
+```bash
+# 使用 npm
+npm install dom-svg-pdf
+
+# 使用 pnpm
+pnpm add dom-svg-pdf
+
+# 使用 yarn
+yarn add dom-svg-pdf
+```
+
+
+## 📝 使用教程
+
+### 基础用法
+
+```typescript
 import { domSvgPdf } from 'dom-svg-pdf'
 
-// 使用浏览器打印
-const pdf = await domSvgPdf('#app', {
-  print: true,
-})
-pdf.print()
+// 方式1：调用浏览器打印对话框
+async function printWithBrowser() {
+  const printer = await domSvgPdf('#content', { 
+    print: true 
+  })
+  printer.print()
+}
 
-// 直接导出 PDF（需要引入字体）
-const pdf = await domSvgPdf('#app')
-pdf.getBlob((blob) => {
-  const url = URL.createObjectURL(blob)
-  window.open(url)
+// 方式2：直接生成 PDF 并下载
+async function downloadPDF() {
+  const pdf = await domSvgPdf('#content')
+  pdf.download('document.pdf') // 直接下载
+}
+```
+
+### 单页导出
+
+```typescript
+// 只导出第2页
+const pdf = await domSvgPdf('#content', {
+  pageNumber: 2 // 导出第2页（从1开始）
 })
 ```
 
-## 配置
+### 多页面导出
 
-#### `katex`
+```typescript
+// 导出多个页面为一个 PDF
+const pdf = await domSvgPdf([
+  { el: '#page1', stylesheet: 'body { color: red; }' },
+  { el: '#page2', stylesheet: 'body { color: blue; }' },
+  { el: '#page3' }
+])
+```
 
-- 是否使用 KaTeX 支持公式导出，默认值为 `false` ，为 `true` 时会加载 KaTeX 的字体（项目中需要使用 KaTeX 渲染公式，且以 HTML 形式输出）
+### 数学公式支持
 
-- 需要将 `public/fonts` 目录中的 KaTeX 字体文件放到项目中，并配置 `fontsPath` 参数
+```typescript
+// KaTeX 字体已内嵌，只需启用即可
+const pdf = await domSvgPdf('#math-content', {
+  katex: true // 启用 KaTeX 支持（字体自动加载）
+})
+```
 
-#### `fonts`
+### 自定义字体
 
-- 自定义字体，默认字体为 [Roboto], 详情请参考 [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
+#### 方法1：从网络链接加载字体
 
-#### `vfs`
+```typescript
+const pdf = await domSvgPdf('#content', {
+  fonts: {
+    MyCustomFont: {
+      normal: 'https://example.com/fonts/MyFont-Regular.ttf',
+      bold: 'https://example.com/fonts/MyFont-Bold.ttf',
+      italics: 'https://example.com/fonts/MyFont-Italic.ttf',
+      bolditalics: 'https://example.com/fonts/MyFont-BoldItalic.ttf'
+    }
+  },
+  docDefinition: {
+    defaultStyle: { 
+      font: 'MyCustomFont'
+    }
+  }
+})
+```
 
-- 虚拟文件系统，详情请参考 [Virtual File System](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/vfs/)
+#### 方法2：通过 VFS 配置自定义字体
 
-#### `bold`
+```typescript
+const pdf = await domSvgPdf('#content', {
+  // VFS 虚拟文件系统（Base64 字体数据）
+  vfs: {
+    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...',  // Base64 字体数据
+    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...'     // Base64 字体数据
+  },
+  fonts: {
+    MyCustomFont: {
+      normal: 'MyFont-Regular.ttf',
+      bold: 'MyFont-Bold.ttf',
+      italics: 'MyFont-Regular.ttf', // 复用普通字体
+      bolditalics: 'MyFont-Bold.ttf'  // 复用粗体字体
+    }
+  },
+  docDefinition: {
+    defaultStyle: { 
+      font: 'MyCustomFont'
+    }
+  }
+})
+```
 
-- 是否模拟加粗，默认为 `false`，为 `true` 时会模拟加粗效果
 
-#### `docDefinition`
 
-- PDF 配置，详情请参考 [pdfMake](https://pdfmake.github.io/docs/0.1/document-definition-object/)
+## 🔧 配置参考
 
-#### `pageNumber`
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `print` | `boolean` | `false` | 是否使用浏览器打印模式 |
+| `pageNumber` | `number` | `undefined` | 指定导出的页码（从1开始）|
+| `bold` | `boolean` | `false` | 是否模拟加粗效果（没有粗体字体时模拟加粗） |
+| `katex` | `boolean` | `false` | 是否启用 KaTeX 数学公式字体 |
+| `fonts` | `TFontDictionary` | `{}` | 自定义字体配置 |
+| `vfs` | `VirtualFonts` | `{}` | 虚拟文件系统（字体文件） |
+| `docDefinition` | `Partial<TDocumentDefinitions>` | `{}` | pdfMake 文档配置 |
+| `printPlugins` | `Parameters<typeof registerHook>[]` | `[]` | vivliostyle.js 插件 |
+| `beforePaged` | `() => void` | `undefined` | 分页前钩子 |
+| `afterPaged` | `(paged) => void` | `undefined` | 分页后钩子 |
+| `beforeToSvg` | `(page, index, total) => void` | `undefined` | SVG转换前钩子 |
+| `afterToSvg` | `(svg, index, total) => void` | `undefined` | SVG转换后钩子 |
+| `beforePdfMake` | `(docDefinition) => void` | `undefined` | PDF生成前钩子 |
+| `afterPdfMake` | `(pdf, docDefinition) => void` | `undefined` | PDF生成后钩子 |
 
-- 导出的页码索引，从 `1` 开始，如果配置了此参数，则仅导出指定的页码
+### 生命周期钩子详解
 
-#### `print`
+所有生命周期钩子都是可选的，用于在转换过程的不同阶段执行自定义逻辑：
 
-print 为 `true` 时，唤起浏览器打印功能（打印内容自动分页）
+```typescript
+const pdf = await domSvgPdf('#content', {
+  // 分页前
+  beforePaged: () => {
+    console.log('即将开始分页...')
+    // 可以在这里修改DOM或样式
+  },
+  
+  // 分页后
+  afterPaged: ({ pageSize, pages }) => {
+    console.log(`分页完成: ${pages.length} 页`)
+    console.log(`页面尺寸: ${pageSize.width} x ${pageSize.height}`)
+    // 可以在这里检查分页结果
+  },
+  
+  // SVG转换前（每页调用）
+  beforeToSvg: (page, index, total) => {
+    console.log(`开始转换第 ${index + 1}/${total} 页`)
+    // 可以在这里修改单页内容
+  },
+  
+  // SVG转换后（每页调用）
+  afterToSvg: (svg, index, total) => {
+    console.log(`第 ${index + 1}/${total} 页转换完成`)
+    // 可以在这里处理SVG内容
+  },
+  
+  // PDF生成前
+  beforePdfMake: (docDefinition) => {
+    console.log('即将生成PDF...', docDefinition)
+    // 可以在这里最后修改PDF配置
+  },
+  
+  // PDF生成后
+  afterPdfMake: (pdf, docDefinition) => {
+    console.log('PDF生成完成', pdf, docDefinition)
+    // 可以在这里处理生成的PDF对象
+  }
+})
+```
 
-#### `printPlugins`
+## ⚠️ 重要说明
 
-`vivliostyle.js` 的插件，详情请参考 [vivliostyle.js](https://docs.vivliostyle.org/#/api#plugin)
+- **运行环境**：本库专为浏览器设计，需要 DOM 环境。服务端使用请配合 Puppeteer
+- **浏览器兼容性**：建议在现代浏览器中使用，IE 不支持
 
-#### `beforePaged`
+## 🔗 相关资源
 
-生命周期钩子，在分页前调用
+- **pdfMake 文档**: [https://pdfmake.github.io/docs/](https://pdfmake.github.io/docs/)
+- **vivliostyle.js**: [https://vivliostyle.org/](https://vivliostyle.org/)
+- **Paged.js**: [https://pagedjs.org/en/documentation/](https://pagedjs.org/en/documentation/)
+- **KaTeX**: [https://katex.org/](https://katex.org/)
+- **CSS Paged Media**: [https://www.w3.org/TR/css-page-3/](https://www.w3.org/TR/css-page-3/)
 
-#### `afterPaged`
+## 🙏 鸣谢
 
-生命周期钩子，在分页后调用，参数：`pageSize` （页面宽高），`pages` （分页后的页面 DOM 数组）
+感谢以下开源项目为 `dom-svg-pdf` 提供的强大支持：
 
-#### `beforeToSvg`
+- **[vivliostyle.js](https://github.com/vivliostyle/vivliostyle.js)** - 基于 Web 标准的新型排版系统，提供专业的 CSS 分页媒体支持
+- **[dom2svg](https://github.com/xiashui1994/dom2svg)** - 高质量的 HTML DOM 到 SVG 转换库
+- **[pdfMake](https://github.com/bpampuch/pdfmake)** - 纯 JavaScript 的客户端 PDF 文档生成库
+- **[KaTeX](https://github.com/KaTeX/KaTeX)** - 快速、高质量的数学公式渲染引擎
 
-生命周期钩子，在 svg 转换前调用，参数：`page` （页面 DOM），`index` （页面索引），`total` （页面总数）
+## 📄 许可证
 
-#### `afterToSvg`
-
-生命周期钩子，在 svg 转换后调用，参数：`svg` （svg 字符串），`index` （页面索引），`total` （页面总数）
-
-#### `beforePdfMake`
-
-生命周期钩子， 在生成 PDF 对象前调用，参数：`docDefinition` （PDF 配置）
-
-#### `afterPdfMake`
-
-生命周期钩子， 在生成 PDF 对象后调用，参数：`pdf` （PDF 对象），`docDefinition` （PDF 配置）
-
-## 注意
-
-- 为浏览器开发的库，可以在浏览器中运行。在服务器上使用 JSDOM 可能无法正常使用，不过可以在 Puppeteer 中运行。
-
-## 鸣谢
-
-- [vivliostyle.js](https://github.com/vivliostyle/vivliostyle.js)：一个基于 Web 标准技术的新型排版系统
-- [dom2svg](https://github.com/xiashui1994/dom2svg)：将给定 HTML DOM 节点转换为可访问的 SVG
-- [pdfMake](https://github.com/bpampuch/pdfmake)：纯 JavaScript 中用于服务器端和客户端的 PDF 文档生成库
-- [katex](https://github.com/KaTeX/KaTeX)：快速数学公式渲染
+[MIT License](LICENSE)

@@ -15,125 +15,243 @@
   </a>
 </p>
 
-<p align="center">Convert HTML DOM nodes to PDF</p>
+<p align="center">High-quality HTML to PDF solution - Supporting mathematical formulas, custom fonts, and precise pagination</p>
 
 <p align="center">English | <a href="README.zh-CN.md">简体中文</a></p>
 
-## Introduction
+---
 
-`dom-svg-pdf` does not depend on the browser’s print function and can directly export web pages as PDF files.
+## ✨ Key Features
 
-## Demo
+- 🚀 **No Browser Print Dependency** - Full control over PDF output using pure web technologies
+- 📄 **Intelligent Pagination** - Professional typesetting based on CSS Paged Media standards
+- 🧮 **Mathematical Formulas** - Complete KaTeX mathematical formula rendering support
+- 🎨 **Custom Fonts** - Support for Chinese fonts and custom font loading
+- 📱 **Cross-platform Compatible** - Works on both PC and mobile devices
+- ⚡ **High Performance** - Support for single-page export and batch processing
+
+## 🎬 Online Demo
 
 Online preview: https://dom-svg-pdf.vercel.app
 
-## Working Principle
+## 💡 How It Works
 
-1. Paginate HTML (based on CSS paginated media)
-2. Convert the paginated HTML to SVG
-3. Write the SVG into a PDF
+`dom-svg-pdf` uses a three-stage conversion process:
 
-## Features
-
-- Compatible with both PC and mobile devices
-- Automatically paginates and exports
-- Based on CSS paginated media
-- Supports mathematical formulas
-- Supports custom fonts
-- Supports single-page export
-
-## Installation
-
-```sh
-pnpm/npm/yarn i dom-svg-pdf
+```
+HTML DOM → Pagination → SVG Conversion → PDF Generation
+             ↓             ↓              ↓
+         vivliostyle → dom2svg → pdfMake
 ```
 
-## Usage
+1. **Intelligent Pagination**: Uses `vivliostyle.js` for professional typesetting based on CSS Paged Media standards
+2. **Precise Conversion**: Converts HTML elements to SVG graphics with pixel-perfect accuracy via `dom2svg`
+3. **PDF Generation**: Writes SVG content into PDF documents using `pdfMake`
 
-```js
+This approach ensures the output PDF is visually identical to the original HTML.
+
+
+## 🚀 Quick Start
+
+### Basic Installation
+
+```bash
+# Using npm
+npm install dom-svg-pdf
+
+# Using pnpm
+pnpm add dom-svg-pdf
+
+# Using yarn
+yarn add dom-svg-pdf
+```
+
+
+## 📝 Usage Tutorial
+
+### Basic Usage
+
+```typescript
 import { domSvgPdf } from 'dom-svg-pdf'
 
-// Use browser print
-const pdf = await domSvgPdf('#app', {
-  print: true,
-})
-pdf.print()
+// Method 1: Call browser print dialog
+async function printWithBrowser() {
+  const printer = await domSvgPdf('#content', { 
+    print: true 
+  })
+  printer.print()
+}
 
-// Directly export PDF (requires importing fonts)
-const pdf = await domSvgPdf('#app')
-pdf.getBlob((blob) => {
-  const url = URL.createObjectURL(blob)
-  window.open(url)
+// Method 2: Direct PDF generation and download
+async function downloadPDF() {
+  const pdf = await domSvgPdf('#content')
+  pdf.download('document.pdf') // Direct download
+}
+```
+
+### Single Page Export
+
+```typescript
+// Export only page 2
+const pdf = await domSvgPdf('#content', {
+  pageNumber: 2 // Export page 2 (starts from 1)
 })
 ```
 
-## Configuration
+### Multi-page Export
 
-#### `katex`
+```typescript
+// Export multiple pages as one PDF
+const pdf = await domSvgPdf([
+  { el: '#page1', stylesheet: 'body { color: red; }' },
+  { el: '#page2', stylesheet: 'body { color: blue; }' },
+  { el: '#page3' }
+])
+```
 
-- Whether to use KaTeX for formula export. The default value is `false`. If set to `true`, it will load KaTeX fonts (the project must use KaTeX to render formulas and output them as HTML)
+### Mathematical Formula Support
 
-- You need to place the KaTeX font files from the `public/fonts` directory into your project and configure the `fontsPath` parameter
+```typescript
+// KaTeX fonts are embedded, just enable it
+const pdf = await domSvgPdf('#math-content', {
+  katex: true // Enable KaTeX support (fonts auto-loaded)
+})
+```
 
-#### `fonts`
+### Custom Fonts
 
-- Custom fonts. The default font is [Roboto]. For more details, refer to [Custom fonts (client-side)](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/)
+#### Method 1: Load Fonts from Network URLs
 
-#### `vfs`
+```typescript
+const pdf = await domSvgPdf('#content', {
+  fonts: {
+    MyCustomFont: {
+      normal: 'https://example.com/fonts/MyFont-Regular.ttf',
+      bold: 'https://example.com/fonts/MyFont-Bold.ttf',
+      italics: 'https://example.com/fonts/MyFont-Italic.ttf',
+      bolditalics: 'https://example.com/fonts/MyFont-BoldItalic.ttf'
+    }
+  },
+  docDefinition: {
+    defaultStyle: { 
+      font: 'MyCustomFont'
+    }
+  }
+})
+```
 
-- Virtual file system. For more details, refer to [Virtual File System](https://pdfmake.github.io/docs/0.1/fonts/custom-fonts-client-side/vfs/)
+#### Method 2: Configure Custom Fonts via VFS
 
-#### `bold`
+```typescript
+const pdf = await domSvgPdf('#content', {
+  // VFS Virtual File System (Base64 font data)
+  vfs: {
+    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...',  // Base64 font data
+    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...'     // Base64 font data
+  },
+  fonts: {
+    MyCustomFont: {
+      normal: 'MyFont-Regular.ttf',
+      bold: 'MyFont-Bold.ttf',
+      italics: 'MyFont-Regular.ttf', // Reuse regular font
+      bolditalics: 'MyFont-Bold.ttf'  // Reuse bold font
+    }
+  },
+  docDefinition: {
+    defaultStyle: { 
+      font: 'MyCustomFont'
+    }
+  }
+})
+```
 
-- Whether to simulate bold text. The default value is `false`. If set to `true`, bold effects will be simulated
 
-#### `docDefinition`
+## 🔧 Configuration Reference
 
-- PDF configuration. For details, refer to [pdfMake](https://pdfmake.github.io/docs/0.1/document-definition-object/)
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `print` | `boolean` | `false` | Whether to use browser print mode |
+| `pageNumber` | `number` | `undefined` | Specify page number to export (starts from 1) |
+| `bold` | `boolean` | `false` | Whether to simulate bold effect (simulates bold when no bold font available) |
+| `katex` | `boolean` | `false` | Whether to enable KaTeX mathematical formula fonts |
+| `fonts` | `TFontDictionary` | `{}` | Custom font configuration |
+| `vfs` | `VirtualFonts` | `{}` | Virtual file system (font files) |
+| `docDefinition` | `Partial<TDocumentDefinitions>` | `{}` | pdfMake document configuration |
+| `printPlugins` | `Parameters<typeof registerHook>[]` | `[]` | vivliostyle.js plugins |
+| `beforePaged` | `() => void` | `undefined` | Before pagination hook |
+| `afterPaged` | `(paged) => void` | `undefined` | After pagination hook |
+| `beforeToSvg` | `(page, index, total) => void` | `undefined` | Before SVG conversion hook |
+| `afterToSvg` | `(svg, index, total) => void` | `undefined` | After SVG conversion hook |
+| `beforePdfMake` | `(docDefinition) => void` | `undefined` | Before PDF generation hook |
+| `afterPdfMake` | `(pdf, docDefinition) => void` | `undefined` | After PDF generation hook |
 
-#### `pageNumber`
+### Lifecycle Hooks Details
 
-- The page number index to export, starting from `1`. If this parameter is configured, only the specified page will be exported
+All lifecycle hooks are optional and used to execute custom logic at different stages of the conversion process:
 
-#### `print`
+```typescript
+const pdf = await domSvgPdf('#content', {
+  // Before pagination
+  beforePaged: () => {
+    console.log('About to start pagination...')
+    // Can modify DOM or styles here
+  },
+  
+  // After pagination
+  afterPaged: ({ pageSize, pages }) => {
+    console.log(`Pagination complete: ${pages.length} pages`)
+    console.log(`Page size: ${pageSize.width} x ${pageSize.height}`)
+    // Can check pagination results here
+  },
+  
+  // Before SVG conversion (called for each page)
+  beforeToSvg: (page, index, total) => {
+    console.log(`Starting conversion of page ${index + 1}/${total}`)
+    // Can modify individual page content here
+  },
+  
+  // After SVG conversion (called for each page)
+  afterToSvg: (svg, index, total) => {
+    console.log(`Page ${index + 1}/${total} conversion complete`)
+    // Can process SVG content here
+  },
+  
+  // Before PDF generation
+  beforePdfMake: (docDefinition) => {
+    console.log('About to generate PDF...', docDefinition)
+    // Can make final modifications to PDF config here
+  },
+  
+  // After PDF generation
+  afterPdfMake: (pdf, docDefinition) => {
+    console.log('PDF generation complete', pdf, docDefinition)
+    // Can process the generated PDF object here
+  }
+})
+```
 
-If print is set to `true`, it will trigger the browser’s print function (automatically paginates print content)
+## ⚠️ Important Notes
 
-#### `printPlugins`
+- **Runtime Environment**: This library is designed for browsers and requires DOM environment. For server-side use, pair with Puppeteer
+- **Browser Compatibility**: Recommended for use in modern browsers, IE not supported
 
-`vivliostyle.js` plugin. For details, refer to [vivliostyle.js](https://docs.vivliostyle.org/#/api#plugin)
+## 🔗 Related Resources
 
-#### `beforePaged`
+- **pdfMake Documentation**: [https://pdfmake.github.io/docs/](https://pdfmake.github.io/docs/)
+- **vivliostyle.js**: [https://vivliostyle.org/](https://vivliostyle.org/)
+- **Paged.js**: [https://pagedjs.org/en/documentation/](https://pagedjs.org/en/documentation/)
+- **KaTeX**: [https://katex.org/](https://katex.org/)
+- **CSS Paged Media**: [https://www.w3.org/TR/css-page-3/](https://www.w3.org/TR/css-page-3/)
 
-Lifecycle hook called before pagination
+## 🙏 Acknowledgments
 
-#### `afterPaged`
+Thanks to the following open source projects for providing strong support for `dom-svg-pdf`:
 
-Lifecycle hook called after pagination. Parameters: `pageSize` (width and height of the page), `pages` (array of paginated page DOM elements)
+- **[vivliostyle.js](https://github.com/vivliostyle/vivliostyle.js)** - A new typesetting system based on web standards, providing professional CSS Paged Media support
+- **[dom2svg](https://github.com/xiashui1994/dom2svg)** - High-quality HTML DOM to SVG conversion library
+- **[pdfMake](https://github.com/bpampuch/pdfmake)** - Pure JavaScript client-side PDF document generation library
+- **[KaTeX](https://github.com/KaTeX/KaTeX)** - Fast, high-quality mathematical formula rendering engine
 
-#### `beforeToSvg`
+## 📄 License
 
-Lifecycle hook called before converting to SVG. Parameters: `page` (page DOM), `index` (page index), `total` (total number of pages)
-
-#### `afterToSvg`
-
-Lifecycle hook called after converting to SVG. Parameters: `svg` (SVG string), `index` (page index), `total` (total number of pages)
-
-#### `beforePdfMake`
-
-Lifecycle hook called before generating the PDF object. Parameters: `docDefinition` (PDF configuration)
-
-#### `afterPdfMake`
-
-Lifecycle hook called after generating the PDF object. Parameters: `pdf` (PDF object), `docDefinition` (PDF configuration)
-
-## Notes
-
-- This is a library developed for browsers and can run in a browser environment. It may not work correctly on the server using JSDOM, but it can run in Puppeteer
-
-## Acknowledgements
-
-- [vivliostyle.js](https://github.com/vivliostyle/vivliostyle.js): an open source project for a new typesetting system based on web standard technology
-- [dom2svg](https://github.com/xiashui1994/dom2svg): Library to convert a given HTML DOM node into an accessible SVG "screenshot"
-- [pdfMake](https://github.com/bpampuch/pdfmake): PDF document generation library for server-side and client-side in pure JavaScript
-- [katex](https://github.com/KaTeX/KaTeX): Fast math typesetting for the web
+[MIT License](LICENSE)
