@@ -39,20 +39,20 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vivliostyle/core": "2.31.1",
+    "@vivliostyle/core": "^2.35.0",
     "dom2svg": "^1.0.11",
     "pdfmake": "^0.2.20"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.8.0",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@types/pdfmake": "^0.2.11",
-    "eslint": "^9.26.0",
+    "@antfu/eslint-config": "^6.1.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/pdfmake": "^0.2.12",
+    "eslint": "^9.38.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.3"
+    "lint-staged": "^16.2.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

@@ -50,7 +50,6 @@ HTML DOM → Pagination → SVG Conversion → PDF Generation
 
 This approach ensures the output PDF is visually identical to the original HTML.
 
-
 ## 🚀 Quick Start
 
 ### Basic Installation
@@ -66,7 +65,6 @@ pnpm add dom-svg-pdf
 yarn add dom-svg-pdf
 ```
 
-
 ## 📝 Usage Tutorial
 
 ### Basic Usage
@@ -76,8 +74,8 @@ import { domSvgPdf } from 'dom-svg-pdf'
 
 // Method 1: Call browser print dialog
 async function printWithBrowser() {
-  const printer = await domSvgPdf('#content', { 
-    print: true 
+  const printer = await domSvgPdf('#content', {
+    print: true
   })
   printer.print()
 }
@@ -133,7 +131,7 @@ const pdf = await domSvgPdf('#content', {
     }
   },
   docDefinition: {
-    defaultStyle: { 
+    defaultStyle: {
       font: 'MyCustomFont'
     }
   }
@@ -146,25 +144,24 @@ const pdf = await domSvgPdf('#content', {
 const pdf = await domSvgPdf('#content', {
   // VFS Virtual File System (Base64 font data)
   vfs: {
-    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...',  // Base64 font data
-    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...'     // Base64 font data
+    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...', // Base64 font data
+    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...' // Base64 font data
   },
   fonts: {
     MyCustomFont: {
       normal: 'MyFont-Regular.ttf',
       bold: 'MyFont-Bold.ttf',
       italics: 'MyFont-Regular.ttf', // Reuse regular font
-      bolditalics: 'MyFont-Bold.ttf'  // Reuse bold font
+      bolditalics: 'MyFont-Bold.ttf' // Reuse bold font
     }
   },
   docDefinition: {
-    defaultStyle: { 
+    defaultStyle: {
       font: 'MyCustomFont'
     }
   }
 })
 ```
-
 
 ## 🔧 Configuration Reference
 
@@ -196,32 +193,32 @@ const pdf = await domSvgPdf('#content', {
     console.log('About to start pagination...')
     // Can modify DOM or styles here
   },
-  
+
   // After pagination
   afterPaged: ({ pageSize, pages }) => {
     console.log(`Pagination complete: ${pages.length} pages`)
     console.log(`Page size: ${pageSize.width} x ${pageSize.height}`)
     // Can check pagination results here
   },
-  
+
   // Before SVG conversion (called for each page)
   beforeToSvg: (page, index, total) => {
     console.log(`Starting conversion of page ${index + 1}/${total}`)
     // Can modify individual page content here
   },
-  
+
   // After SVG conversion (called for each page)
   afterToSvg: (svg, index, total) => {
     console.log(`Page ${index + 1}/${total} conversion complete`)
     // Can process SVG content here
   },
-  
+
   // Before PDF generation
   beforePdfMake: (docDefinition) => {
     console.log('About to generate PDF...', docDefinition)
     // Can make final modifications to PDF config here
   },
-  
+
   // After PDF generation
   afterPdfMake: (pdf, docDefinition) => {
     console.log('PDF generation complete', pdf, docDefinition)

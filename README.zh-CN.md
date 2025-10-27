@@ -50,7 +50,6 @@ HTML DOM → 分页处理 → SVG 转换 → PDF 生成
 
 这种方式确保了输出的 PDF 与原始 HTML 在视觉上完全一致。
 
-
 ## 🚀 快速开始
 
 ### 基础安装
@@ -66,7 +65,6 @@ pnpm add dom-svg-pdf
 yarn add dom-svg-pdf
 ```
 
-
 ## 📝 使用教程
 
 ### 基础用法
@@ -76,8 +74,8 @@ import { domSvgPdf } from 'dom-svg-pdf'
 
 // 方式1：调用浏览器打印对话框
 async function printWithBrowser() {
-  const printer = await domSvgPdf('#content', { 
-    print: true 
+  const printer = await domSvgPdf('#content', {
+    print: true
   })
   printer.print()
 }
@@ -133,7 +131,7 @@ const pdf = await domSvgPdf('#content', {
     }
   },
   docDefinition: {
-    defaultStyle: { 
+    defaultStyle: {
       font: 'MyCustomFont'
     }
   }
@@ -146,26 +144,24 @@ const pdf = await domSvgPdf('#content', {
 const pdf = await domSvgPdf('#content', {
   // VFS 虚拟文件系统（Base64 字体数据）
   vfs: {
-    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...',  // Base64 字体数据
-    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...'     // Base64 字体数据
+    'MyFont-Regular.ttf': 'AAEAAAAOAIAAAwBgT1MvM...', // Base64 字体数据
+    'MyFont-Bold.ttf': 'AAEAAAAOAIAAAwBgT1MvM...' // Base64 字体数据
   },
   fonts: {
     MyCustomFont: {
       normal: 'MyFont-Regular.ttf',
       bold: 'MyFont-Bold.ttf',
       italics: 'MyFont-Regular.ttf', // 复用普通字体
-      bolditalics: 'MyFont-Bold.ttf'  // 复用粗体字体
+      bolditalics: 'MyFont-Bold.ttf' // 复用粗体字体
     }
   },
   docDefinition: {
-    defaultStyle: { 
+    defaultStyle: {
       font: 'MyCustomFont'
     }
   }
 })
 ```
-
-
 
 ## 🔧 配置参考
 
@@ -197,32 +193,32 @@ const pdf = await domSvgPdf('#content', {
     console.log('即将开始分页...')
     // 可以在这里修改DOM或样式
   },
-  
+
   // 分页后
   afterPaged: ({ pageSize, pages }) => {
     console.log(`分页完成: ${pages.length} 页`)
     console.log(`页面尺寸: ${pageSize.width} x ${pageSize.height}`)
     // 可以在这里检查分页结果
   },
-  
+
   // SVG转换前（每页调用）
   beforeToSvg: (page, index, total) => {
     console.log(`开始转换第 ${index + 1}/${total} 页`)
     // 可以在这里修改单页内容
   },
-  
+
   // SVG转换后（每页调用）
   afterToSvg: (svg, index, total) => {
     console.log(`第 ${index + 1}/${total} 页转换完成`)
     // 可以在这里处理SVG内容
   },
-  
+
   // PDF生成前
   beforePdfMake: (docDefinition) => {
     console.log('即将生成PDF...', docDefinition)
     // 可以在这里最后修改PDF配置
   },
-  
+
   // PDF生成后
   afterPdfMake: (pdf, docDefinition) => {
     console.log('PDF生成完成', pdf, docDefinition)

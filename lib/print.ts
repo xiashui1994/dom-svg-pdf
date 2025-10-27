@@ -64,7 +64,7 @@ function preparePrint(iframeWin: Window, htmlDoc: string | string[]): Promise<Co
 }
 
 export async function printHTML(htmlDoc: string | string[]) {
-  const iframe = await createIframe(content, { width: '0', height: '0', borderWidth: '0' })
+  const iframe = await createIframe(content, { width: '1px', height: '1px', borderWidth: '0' })
   const iframeWin = iframe.contentWindow!
   const Viewer = await preparePrint(iframeWin, htmlDoc)
   const pageSizes = Viewer.getPageSizes()
